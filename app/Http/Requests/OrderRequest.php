@@ -16,7 +16,7 @@ class OrderRequest extends FormRequest
         $rules = [
             'customer.name' => 'required|string|max:255',
             'customer.email' => 'required|email|max:255',
-            'customer.document' => 'required|string|max:20',
+            'customer.document' => 'required|string|max:20|regex:/^\d{11}$/', // CPF com 11 dígitos
             'customer.phone' => 'required|string|max:20',
             'customer.address' => 'nullable|array',
             'items' => 'required|array|min:1',
@@ -31,7 +31,7 @@ class OrderRequest extends FormRequest
             $rules['credit_card.expiry_month'] = 'required|string|size:2';
             $rules['credit_card.expiry_year'] = 'required|string|size:4';
             $rules['credit_card.cvv'] = 'required|string|size:3';
-            $rules['credit_card.holder_document'] = 'required|string|max:20';
+            $rules['credit_card.holder_document'] = 'required|string|size:11|same:customer.document'; // Mesmo documento
             $rules['installments'] = 'sometimes|integer|min:1|max:12';
         }
 

@@ -15,7 +15,7 @@ class OrderRepository
         return Order::create([
             'order_number'   => 'ORD-' . Str::random(8),
             'customer_id'    => $customerId,
-            'user_id'       => Auth::id(),
+            'user_id'       =>1,
             'subtotal'      => $subtotal,
             'total'         => $total,
             'payment_method' => $orderData['payment_method'],

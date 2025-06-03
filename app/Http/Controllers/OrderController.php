@@ -39,7 +39,7 @@ class OrderController extends Controller
 
     public function myOrders(): JsonResponse
     {
-        $orders = $this->orderService->getUserOrders(auth()->id());
+        $orders = $this->orderService->getUserOrders(1);
         return response()->json(OrderResource::collection($orders));
     }
 }

@@ -15,9 +15,9 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('orders', OrderController::class)->only(['store', 'show']);
     Route::get('/my-products', [ProductController::class, 'myProducts']);
     Route::get('/my-orders', [OrderController::class, 'myOrders']);
-});
+// });

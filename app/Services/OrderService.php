@@ -83,7 +83,7 @@ class OrderService
             'customer_postal_code'    => $customer->address['zip_code'] ?? null,
             'customer_address_number' => $customer->address['number'] ?? null,
             'payment_method'          => $orderData['payment_method'],
-            'total'                   => $total,
+            'total'                   => intval($total * 100),
             'description'             => "Pedido #{$order->order_number}",
             'order_number'            => $order->order_number,
             'remote_ip'               => request()->ip(),

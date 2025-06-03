@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Repositories\Contracts\ProductRepositoryInterface;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
 
 class ProductService
@@ -17,14 +18,20 @@ class ProductService
         return $this->productRepository->all();
     }
 
-    public function getProductById(int $id): ?Product
+    public function getProductById(int $id): Product
     {
-        return $this->productRepository->find($id);
+        $product = $this->productRepository->find($id);
+        
+        if (!$product) {
+            abort(404, 'Product not found');
+        }
+        
+        return $product;
     }
 
     public function createProduct(array $data): Product
     {
-        $data['user_id'] = Auth::id();
+        $data['user_id'] = 1;
         return $this->productRepository->create($data);
     }
 
@@ -47,8 +54,8 @@ class ProductService
 
     private function checkOwnership(Product $product): void
     {
-        if (Auth::id() !== $product->user_id) {
-            abort(403, 'Unauthorized action.');
+        if (1 !== $product->user_id) {
+            throw new AuthorizationException('Unauthorized action.');
         }
     }
 }
